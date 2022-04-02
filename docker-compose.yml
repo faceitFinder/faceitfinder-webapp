@@ -1,6 +1,6 @@
 version: '3'
 services:
-  nginx_webapp:
+  nginx:
     image: nginx:1.15-alpine
     ports:
       - "80:80"
@@ -15,7 +15,7 @@ services:
     depends_on:
       - webapp
 
-  certbot_webapp:
+  certbot:
     image: certbot/certbot
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
@@ -26,7 +26,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: faceitfinder_webapp
     restart: on-failure
     env_file:
       - ./app/.env
