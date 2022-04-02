@@ -13,7 +13,7 @@ sudo ./init-letsencrypt.sh
 docker-compose -f docker-compose.dev.yml up
 ```
 ### Access it
-localhost:8080[http://localhost:8080]
+[localhost:8080](http://localhost:8080)
 
 ## Prod
 ```
