@@ -3,18 +3,21 @@ extends layout
 block content
   .flex.flex-col.justify-center.items-center.min-h-screen.pt-24.pb-4
     div
+      if error
+        .bg-red-400.rounded-md.mb-3.p-3.font-medium
+          span.text-red-800 Error: #{error}.
       h1.text-2xl.font-extrabold.text-slate-200.tracking-tight.font-popins(class='sm:text-3xl') 
-        | Wanna find multiple faceit accounts ?
+        | Want to find multiple faceit accounts ?
       h2.font-extrabold.text-slate-300.font-popins.underline 
         | Maximum of 10 accounts
-      form.w-full(method='dialog' onsubmit='searchPlayers("multiple")')
+      form.w-full(method='POST' action='/search')
         textarea.w-full.rounded-md.bg-gray-700.text-gray-300.mt-2.p-2(
           class='hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-300'
-          name='multiple' 
+          name='search' 
           cols='30'
           rows='10'
           placeholder='You can put multiple steam ids here.\nYou can also put the datas from the ingame command `status` (only the part with the players informations matters).')
-        button.w-full.rounded-md.bg-gray-300.text-gray-700.mt-2.p-2.font-bold.transition-all.ease-in-out(
-          class='hover:bg-gray-400 hover:text-gray-800' 
-          type='submit')
+        button.w-full.flex.justify-center.items-center.rounded-md.bg-gray-300.text-gray-700.mt-2.p-2.font-bold.transition-all.ease-in-out(
+          class='hover:bg-gray-100' 
+          type='submit') 
           | Search

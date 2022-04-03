@@ -3,11 +3,16 @@ const router = Router()
 const { findSteamUIds } = require('../utilities/regexp/regexp')
 const Steam = require('../utilities/steam/steam')
 const Player = require('../utilities/faceit/player')
+const Ladder = require('../utilities/faceit/ladder')
+const Stats = require('../utilities/stats/player')
+const Match = require('../utilities/faceit/match')
 
 router.post('/', async (req, res, next) => {
-  const max = req.body.amount > 10 ? 10 : req.body.amount || 10
-  const datas = req.body.datas
+  const max = 10
+  const datas = req.body.search
   const users = []
+
+  if (!datas.length) res.render('index', { error: 'You need to request at least 1 account.' })
 
   users.push(...findSteamUIds(datas))
 
@@ -17,7 +22,10 @@ router.post('/', async (req, res, next) => {
       .forEach(e => users.push(e.split('/').filter(e => e).pop()))
 
   Promise.all(getUsersDatas(users.slice(0, max)))
-    .then(userDatas => res.json(userDatas))
+    .then(userDatas => res.render(
+      'search', {
+      'datas': userDatas
+    }))
 })
 
 const getUsersDatas = users => {
@@ -26,18 +34,28 @@ const getUsersDatas = users => {
       const steamId = await Steam.getId(e)
       const faceitId = await Player.getId(steamId)
       const playerDatas = await Player.getDatas(faceitId)
-      const playerHistory = await Player.getHistory(faceitId, 20)
+      const playerHistory = await Match.getMatchElo(faceitId, 10)
+      const playerStats = await Player.getStats(faceitId)
+      const ladderRegion = await Ladder.getDatas(faceitId, playerDatas.games.csgo.region)
+      const ladderCountry = await Ladder.getDatas(faceitId, playerDatas.games.csgo.region, playerDatas.country)
+
       const datas = {
         steamParam: e,
         steamId: steamId,
         playerDatas: playerDatas,
-        playerHistory: playerHistory
+        playerStats: playerStats,
+        lastStatsGame: Stats.generatePlayerStats(playerHistory),
+        ladder: {
+          region: ladderRegion,
+          country: ladderCountry,
+        }
       }
       return datas
     } catch (error) {
+      console.log(error)
       return {
         steamParam: e,
-        error: error
+        error: 'An error has occured'
       }
     }
   })
