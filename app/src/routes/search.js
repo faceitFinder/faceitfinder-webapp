@@ -24,6 +24,7 @@ router.post('/', async (req, res, next) => {
   Promise.all(getUsersDatas(users.slice(0, max)))
     .then(userDatas => res.render(
       'search', {
+      'title': 'FaceitFinder - SEARCH',
       'datas': userDatas
     }))
 })

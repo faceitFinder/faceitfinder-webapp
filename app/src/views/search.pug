@@ -15,11 +15,23 @@ block content
               //- First panel
               .flex.flex-row.gap-2.bg-gray-800.rounded-md.p-2(class='md:flex-col xl:flex-row')
                 //- Avatar
-                img.w-32.h-32.rounded-md.shadow-md(
+                img.w-36.h-36.rounded-md.shadow-md(
                   src=user.playerDatas.avatar 
                   alt='avatar-' + user.playerDatas.nickname)
-                .flex.flex-col.gap-y-2.gap-x-2.h-min(class='sm:flex-row md:flex-col')
-                  .flex.items-center.justify-between.bg-gray-700.rounded-md.text-white.py-1.px-2
+                .flex.flex-row.gap-2.h-min.flex-wrap(class='sm:flex-row md:flex-col')
+                  .flex.gap-2.w-fit.flex-wrap
+                    //- Nickname
+                    .bg-gray-700.rounded-md.text-white.px-2.h-min
+                      span.font-medium=user.playerDatas.nickname
+                    //- Steam link
+                    .flex.items-center.bg-gray-700.rounded-md.text-white.px-1.py-1.h-min(class='sm:px-2')
+                      a(href='https://steamcommunity.com/profiles/' + user.steamId target='_blank')
+                        img.min-h-4.w-4.h-4(src='img/steam.svg')
+                    //- Faceit link
+                    .flex.items-center.bg-gray-700.rounded-md.text-white.px-2.py-1.h-min
+                      a(href='https://www.faceit.com/en/players/' + user.playerDatas.nickname target='_blank')
+                        img.min-h-4.w-4.h-4(src='img/faceit.svg')
+                  .flex.items-center.justify-between.bg-gray-700.rounded-md.text-white.py-1.px-2.h-min
                     //- Elo
                     .flex-1
                       span.font-medium Elo: 
@@ -41,11 +53,8 @@ block content
                 //- Second panel
                 .flex.flex-col.gap-2.bg-gray-800.rounded-md.p-2
                   h2.rounded-md.text-white.px-2.font-medium Main Stats: 
-                  //- Nickname, Country Ladder, Region Ladder
+                  //- Country Ladder, Region Ladder
                   .flex.items-center.gap-x-2.w-max
-                    //- Nickname
-                    .bg-gray-700.rounded-md.text-white.px-2
-                      span.font-medium=user.playerDatas.nickname
                     //- Country Ladder
                     .flex-1.flex.items-center.justify-center.gap-x-1.bg-gray-700.rounded-md.text-white.px-2
                       img.w-5.h-5(src='https://purecatamphetamine.github.io/country-flag-icons/3x2/' +  user.playerDatas.country.toUpperCase() + '.svg'
