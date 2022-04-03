@@ -27,6 +27,8 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: on-failure
+    environment:
+      - NODE_ENV=prod
     env_file:
       - ./app/.env
     volumes:
