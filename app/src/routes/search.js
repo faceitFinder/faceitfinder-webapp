@@ -18,6 +18,7 @@ router.post('/', async (req, res, next) => {
 
   if (!(users.length > 0))
     datas
+      .trim()
       .split(/ +/)
       .forEach(e => users.push(e.split('/').filter(e => e).pop()))
 
