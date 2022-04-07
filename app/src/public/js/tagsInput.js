@@ -132,7 +132,7 @@
   // Set All the Default Values
   TagsInput.defaults = {
     selector: '',
-    wrapperClass: 'bg-gray-700 overflow-x-scroll text-gray-300 rounded-md h-full p-2 flex justify-top flex-wrap overflow-hidden max-w-2xl h-72 content-start',
+    wrapperClass: 'bg-gray-700 overflow-y-scroll text-gray-300 rounded-md h-full p-2 flex justify-top flex-wrap overflow-hidden max-w-2xl h-72 content-start',
     inputClass: 'bg-inherit focus:outline-none w-full h-min m-1',
     tagClass: 'hover:bg-red-400 hover:font-medium bg-slate-600 text-white rounded-md px-2 py-1 m-1 text-ellipsis overflow-hidden max-w-full h-min cursor-pointer',
     max: 10,

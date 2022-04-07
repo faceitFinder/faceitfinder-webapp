@@ -752,8 +752,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   overflow: hidden;
 }
 
-.overflow-x-scroll {
-  overflow-x: scroll;
+.overflow-y-scroll {
+  overflow-y: scroll;
 }
 
 .text-ellipsis {
