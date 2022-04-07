@@ -4,10 +4,10 @@ block content
   .flex.flex-wrap.min-h-screen.pt-24.pb-4.text-gray-300
     .w-full.max-w-screen-xl.mx-auto.rounded-md
       each user in datas
-        if user.error 
-          .bg-red-400.rounded-md.mb-3.p-3.font-medium
+        if user.error
+          .bg-red-400.rounded-md.mb-3.p-3.font-medium.text-ellipsis.overflow-hidden 
             span.text-red-800 Error: #{user.error}. User requested 
-              u.font-bold #{user.steamParam}
+              u.font-bold  #{user.steamParam}
         else
           .bg-slate-700.rounded-md.mb-6.p-3.shadow-md
             //- All panels
