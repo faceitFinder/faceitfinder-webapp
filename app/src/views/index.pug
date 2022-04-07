@@ -9,16 +9,11 @@ block content
       h1.text-2xl.font-extrabold.text-slate-200.tracking-tight.font-popins(class='sm:text-3xl') 
         | Want to find multiple faceit accounts ?
       h2.font-medium.text-slate-300.underline 
-        | Maximum of 10 accounts
+        | Maximum of 10 accounts.
       h3.font-normal.text-slate-300
-        | You need to separate the accounts with a space
+        | You need to separate the accounts with a comma.
       form.w-full(method='POST' action='/search')
-        textarea.w-full.rounded-md.bg-gray-700.text-gray-300.mt-2.p-2(
-          class='hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-300'
-          name='search' 
-          cols='30'
-          rows='10'
-          placeholder='You can put multiple steam ids here.\nYou can also put the datas from the ingame command `status` (only the part with the players informations matters).')
+        input#search(name='search')
         button.w-full.flex.justify-center.items-center.rounded-md.bg-gray-300.text-gray-700.mt-2.p-2.font-bold.transition-all.ease-in-out(
           class='hover:bg-gray-100' 
           type='submit') 

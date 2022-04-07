@@ -19,7 +19,7 @@ router.post('/', async (req, res, next) => {
   if (!(users.length > 0))
     datas
       .trim()
-      .split(/ +/)
+      .split(/,+/)
       .forEach(e => users.push(e.split('/').filter(e => e).pop()))
 
   Promise.all(getUsersDatas(users.slice(0, max)))
@@ -33,10 +33,11 @@ router.post('/', async (req, res, next) => {
 const getUsersDatas = users => {
   return users.map(async e => {
     try {
+      const maxMatch = 10
       const steamId = await Steam.getId(e)
       const faceitId = await Player.getId(steamId)
       const playerDatas = await Player.getDatas(faceitId)
-      const playerHistory = await Match.getMatchElo(faceitId, 10)
+      const playerHistory = await Match.getMatchElo(faceitId, maxMatch)
       const playerStats = await Player.getStats(faceitId)
       const ladderRegion = await Ladder.getDatas(faceitId, playerDatas.games.csgo.region)
       const ladderCountry = await Ladder.getDatas(faceitId, playerDatas.games.csgo.region, playerDatas.country)

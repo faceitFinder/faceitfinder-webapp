@@ -88,12 +88,9 @@ block content
                         span #{user.playerStats.lifetime['Longest Win Streak']}
                 //- Thrid panel
                 .flex.flex-1.flex-col.gap-2.bg-gray-800.rounded-md.p-2
-                  h2.rounded-md.text-white.px-2.font-medium.capitalize Last 10 Matches Stats: 
+                  h2.rounded-md.text-white.px-2.font-medium.capitalize Last #{user.lastStatsGame.games} Matches Stats: 
                   .flex.gap-2.flex-wrap
                     .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min
-                      p
-                        span.font-medium Matches: 
-                        span #{user.lastStatsGame.games}
                       p
                         span.font-medium Winrate: 
                         span #{user.lastStatsGame.winrate}%

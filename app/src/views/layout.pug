@@ -15,50 +15,37 @@ html
             button.inline-flex.items-center.justify-center.p-2.rounded-md.text-gray-400(type='button' class='hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white' aria-controls='mobile-menu' aria-expanded='false' onclick='toggleMobileMenu()')
               span.sr-only Open main menu
               //- Menu is closed
-              svg.block.h-6.w-6(xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke='currentColor' aria-hidden='true')
+              svg#open-menu.block.h-6.w-6(xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke='currentColor' aria-hidden='true')
                 path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 12h16M4 18h16')
               //- Menu is open
-              svg.hidden.h-6.w-6(xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke='currentColor' aria-hidden='true')
+              svg#close-menu.hidden.h-6.w-6(xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke='currentColor' aria-hidden='true')
                 path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 18L18 6M6 6l12 12')
           .flex-1.flex.items-center.justify-center(class='sm:items-stretch sm:justify-start')
             .flex-shrink-0.flex.items-center
-              img.block.h-8.w-auto(class='lg:hidden' src='/img/logo.png' alt='Faceitfinder')
-              img.hidden.h-8.w-auto(class='lg:block' src='/img/logo.png' alt='Faceitfinder')
+              a(href="/")
+                img.block.h-8.w-auto(class='lg:hidden' src='/img/logo.png' alt='Faceitfinder')
+              a(href="/")
+                img.hidden.h-8.w-auto(class='lg:block' src='/img/logo.png' alt='Faceitfinder')
             .hidden(class='sm:block sm:ml-6')
               .flex.space-x-4
                 //- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white"
                 a.bg-gray-900.text-white.px-3.py-2.rounded-md.text-sm.font-medium(href='/' aria-current='page') Home
-                a.text-gray-300.px-3.py-2.rounded-md.text-sm.font-medium(class='hover:bg-blue-600 hover:text-white' href='https://discord.gg/uPAdfvfuTP' aria-current='page' target='_blank') Discord
-            .hidden.w-full.justify-end(class='sm:flex')
-              form.w-full.flex.justify-end(method='POST' action='/search')
-                .relative
-                  svg.pl-2.w-fit.flex-none.bg-gray-700.text-gray-300.absolute(class='bottom-1.5' width='24' height='24' fill='none')
-                    path(d='m19 19-3.5-3.5' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round')
-                    circle(cx='11' cy='11' r='6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round')
-                input.bg-gray-700.text-gray-300.rounded-md.h-full.indent-9(class='focus:outline-none focus:border-gray-300 focus:ring-gray-300 focus:ring-1 w-1/4 lg:w-1/3 md:w-1/2 sm:w-72' name='search' placeholder='Search players..' )
-                button.relative(type='submit')
-                  svg.absolute.right-0.px-2.w-fit.bg-gray-700(class='bottom-1.5' xmlns='http://www.w3.org/2000/svg' height='24px' viewbox='0 0 24 24' width='24px' fill="none")
-                    path(d='M0 0h24v24H0z' fill='none')
-                    path.fill-gray-300.transition-all.ease-in-out(class='hover:fill-gray-400' d='M2.01 21L23 12 2.01 3 2 10l15 2-15 2z')
+                a.text-gray-300.px-3.py-2.rounded-md.text-sm.font-medium(class='hover:bg-blue-600 hover:text-white' href='https://discord.gg/uPAdfvfuTP' aria-current='page' target='_blank') Discord Server
+                a.text-gray-300.px-3.py-2.rounded-md.text-sm.font-medium(class='hover:bg-indigo-600 hover:text-white' href='https://discord.com/oauth2/authorize?client_id=838088031222235197&permissions=274878220288&scope=bot%20applications.commands' aria-current='page' target='_blank') Discord Bot
 
       #mobile-menu(class='sm:hidden hidden')
         .px-2.pt-2.pb-3.space-y-1
           //- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white"
-          a.bg-gray-900.text-white.block.px-3.py-2.rounded-md.text-base.font-medium(href='#' aria-current='page') Home
-          a.text-gray-300.block.px-3.py-2.rounded-md.text-base.font-medium(href='#' class='hover:bg-gray-700 hover:text-white') Calendar
-          .flex.w-full.h-9.mt-2(class='sm:hidden')
-            form.w-full.flex(method='POST' action='/search')
-              .relative
-                svg.pl-2.w-fit.flex-none.bg-gray-700.text-gray-300.absolute(class='bottom-1.5' width='24' height='24' fill='none')
-                  path(d='m19 19-3.5-3.5' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round')
-                  circle(cx='11' cy='11' r='6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round')
-              input.bg-gray-700.text-gray-300.rounded-md.h-full.indent-9.w-full(class='focus:outline-none focus:border-gray-300 focus:ring-gray-300 focus:ring-1' name='search' placeholder='Search players..' )
-              button.relative(type='submit')
-                svg.absolute.right-0.px-2.w-fit.bg-gray-700(class='bottom-1.5' xmlns='http://www.w3.org/2000/svg' height='24px' viewbox='0 0 24 24' width='24px' fill="none")
-                  path(d='M0 0h24v24H0z' fill='none')
-                  path.fill-gray-300(d='M2.01 21L23 12 2.01 3 2 10l15 2-15 2z')
+          a.bg-gray-900.text-white.block.px-3.py-2.rounded-md.text-base.font-medium(href='/' aria-current='page') Home
+          a.text-gray-300.block.px-3.py-2.rounded-md.text-base.font-medium(href='https://discord.gg/uPAdfvfuTP'
+            target='_blank'
+              class='hover:bg-blue-600 hover:text-white') Discord
 
     main.px-2.min-h-screen.container.mx-auto.z-40(class='sm:px-6 lg:px-8')
       block content
 
+    //- Save Class
+    .w-full.hidden.bg-slate-600.text-white.rounded-md.px-2.py-1.m-1.bg-gray-700.text-gray-300.rounded-md.h-full.p-2.bg-inherit.text-ellipsis.overflow-hidden.h-72.h-min.content-start.max-w-2xl.w-2xl.cursor-pointer.overflow-x-scroll(class='focus:outline-none hover:bg-red-400  hover:font-medium')
+
     script(src="js/header.js")
+    script(src="js/tagsInput.js")
