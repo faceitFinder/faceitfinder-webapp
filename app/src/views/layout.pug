@@ -4,9 +4,23 @@ html
     meta(charset='UTF-8')
     meta(http-equiv='X-UA-Compatible' content='IE=edge')
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='Get Faceit accounts stats from Steam parameters such as: Vanity URLs, Custom URLs, SteamID64 URLs, Steam64 IDs, Steam2 IDs')
+    meta(itemprop='name', content=title)
+    meta(itemprop='description', content='Get Faceit accounts stats from Steam parameters such as: Vanity URLs, Custom URLs, SteamID64 URLs, Steam64 IDs, Steam2 IDs')
+    meta(itemprop='image', content='')
+    meta(property='og:url', content='https://faceitfinder.app')
+    meta(property='og:type', content='website')
+    meta(property='og:title', content=title)
+    meta(property='og:description', content='Get Faceit accounts stats from Steam parameters such as: Vanity URLs, Custom URLs, SteamID64 URLs, Steam64 IDs, Steam2 IDs')
+    meta(property='og:image', content='')
+    meta(name='twitter:card', content='summary_large_image')
+    meta(name='twitter:title', content=title)
+    meta(name='twitter:description', content='Get Faceit accounts stats from Steam parameters such as: Vanity URLs, Custom URLs, SteamID64 URLs, Steam64 IDs, Steam2 IDs')
+    meta(name='twitter:image', content='')
     title= title
     link(rel='icon' type='image/png' href='/img/logo.png')
     link(rel='stylesheet' href='/css/styles.css')
+    block stylesheets
   body.bg-gray-800.text-opensans
     nav.bg-gray-800.fixed.w-full.z-50.border-b.border-gray-700
       .mx-auto.container.px-2(class='sm:px-6 lg:px-8')
@@ -49,3 +63,4 @@ html
 
     script(src="js/header.js")
     script(src="js/tagsInput.js")
+    block scripts
