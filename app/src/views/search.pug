@@ -11,26 +11,22 @@ block content
         else
           .bg-slate-700.rounded-md.mb-6.p-3.shadow-md
             //- All panels
-            .flex.flex-col.gap-4.flex-wrap(class='md:flex-row')
+            .flex.flex-row.gap-4.flex-wrap
               //- First panel
-              .flex.flex-row.gap-2.bg-gray-800.rounded-md.p-2(class='md:flex-col xl:flex-row')
+              .flex.flex-2.flex-row.gap-2.bg-gray-800.rounded-md.p-2(class='lg:flex-row md:flex-col')
                 //- Avatar
                 img.w-36.h-36.rounded-md.shadow-md(
                   src=user.playerDatas.avatar 
                   alt='avatar-' + user.playerDatas.nickname)
                 .flex.flex-row.gap-2.h-min.flex-wrap(class='sm:flex-row md:flex-col')
-                  .flex.gap-2.w-fit.flex-wrap
-                    //- Nickname
-                    .bg-gray-700.rounded-md.text-white.px-2.h-min
-                      span.font-medium=user.playerDatas.nickname
-                    //- Steam link
-                    .flex.items-center.bg-gray-700.rounded-md.text-white.px-1.py-1.h-min(class='sm:px-2')
-                      a(href='https://steamcommunity.com/profiles/' + user.steamId target='_blank')
-                        img.min-h-4.w-4.h-4(src='img/steam.svg')
-                    //- Faceit link
-                    .flex.items-center.bg-gray-700.rounded-md.text-white.px-2.py-1.h-min
-                      a(href='https://www.faceit.com/en/players/' + user.playerDatas.nickname target='_blank')
-                        img.min-h-4.w-4.h-4(src='img/faceit.svg')
+                  //- Steam link
+                  a.flex.gap-2.justify-between.items-center.bg-gray-700.rounded-md.text-white.px-1.py-1.h-min(class='sm:px-2' href='https://steamcommunity.com/profiles/' + user.steamId target='_blank')
+                    span.font-medium=user.steamDatas.personaname
+                    img.min-h-4.w-4.h-4(src='img/steam.svg')
+                  //- Faceit link
+                  a.flex.gap-2.justify-between.items-center.bg-gray-700.rounded-md.text-white.px-2.py-1.h-min(href='https://www.faceit.com/en/players/' + user.playerDatas.nickname target='_blank')
+                    span.font-medium=user.playerDatas.nickname
+                    img.min-h-4.w-4.h-4(src='img/faceit.svg')
                   .flex.items-center.justify-between.bg-gray-700.rounded-md.text-white.py-1.px-2.h-min
                     //- Elo
                     .flex-1
@@ -42,16 +38,16 @@ block content
                     //- Last match results
                   .flex.flex-col.bg-gray-700.rounded-md.text-white.py-1.px-2.h-min
                     h2.capitalize.font-medium last matches: 
-                    p.flex.justify-around.items-center
+                    p.flex.gap-2.justify-start.items-center
                       each result in user.playerStats.lifetime['Recent Results']
                         if result == '1'
                           span.font-medium.text-green-500 W
                         else
                           span.font-medium.text-red-500 L
               //- Second and Third panel
-              .flex.flex-1.gap-4.flex-col(class='xl:flex-row')
+              .flex.flex-1.gap-4.flex-col(class='lg:flex-row')
                 //- Second panel
-                .flex.flex-col.gap-2.bg-gray-800.rounded-md.p-2
+                .flex.flex-1.flex-col.gap-2.bg-gray-800.rounded-md.p-2
                   h2.rounded-md.text-white.px-2.font-medium Main Stats: 
                   //- Country Ladder, Region Ladder
                   .flex.items-center.gap-x-2.w-max
@@ -66,7 +62,7 @@ block content
                         alt='country-' + user.playerDatas.games.csgo.region)
                       span.w-fit=user.ladder.region.position
                   //- Stats
-                  .flex.flex-1.gap-2.flex-wrap
+                  .flex.gap-2.flex-wrap
                     .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min
                       p
                         span.font-medium Matches: 

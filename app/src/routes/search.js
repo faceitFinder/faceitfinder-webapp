@@ -35,6 +35,7 @@ const getUsersDatas = users => {
     try {
       const maxMatch = 10
       const steamId = await Steam.getId(e)
+      const steamDatas = await Steam.getDatas(steamId)
       const faceitId = await Player.getId(steamId)
       const playerDatas = await Player.getDatas(faceitId)
       const playerHistory = await Match.getMatchElo(faceitId, maxMatch)
@@ -45,6 +46,7 @@ const getUsersDatas = users => {
       const datas = {
         steamParam: e,
         steamId: steamId,
+        steamDatas: steamDatas,
         playerDatas: playerDatas,
         playerStats: playerStats,
         lastStatsGame: Stats.generatePlayerStats(playerHistory),
