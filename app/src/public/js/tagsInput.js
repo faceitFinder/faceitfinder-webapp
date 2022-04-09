@@ -49,7 +49,10 @@
     })
 
     this.wrapper.insertBefore(tag, this.input)
+    this.wrapper.insertBefore(this.input, tag)
     this.orignal_input.value = this.arr.join(',')
+
+    this.wrapper.click()
 
     return this
   }
@@ -117,7 +120,8 @@
 
     tags.input.addEventListener('keydown', function (e) {
       // Check if backspace
-      if (e.keyCode == 8 && tags.input.value.length == 0) tags.deleteTag(tags.wrapper.querySelector('span:last-of-type'), tags.arr.length - 1)
+      if (e.keyCode == 8 && tags.input.value.length == 0)
+        tags.deleteTag(tags.wrapper.querySelector('span:first-of-type'), tags.arr.length - 1)
       const str = tags.input.value.trim()
 
       if (!!(~[9, 13, 188].indexOf(e.keyCode))) {
@@ -132,7 +136,7 @@
   // Set All the Default Values
   TagsInput.defaults = {
     selector: '',
-    wrapperClass: 'bg-gray-700 overflow-y-scroll text-gray-300 rounded-md h-full p-2 flex justify-top flex-wrap overflow-hidden max-w-2xl h-72 content-start',
+    wrapperClass: 'bg-gray-700 overflow-y-scroll scroll-y text-gray-300 rounded-md h-full p-2 flex justify-top flex-wrap overflow-hidden max-w-2xl h-72 content-start',
     inputClass: 'bg-inherit focus:outline-none w-full h-min m-1',
     tagClass: 'hover:bg-red-400 hover:font-medium bg-slate-600 text-white rounded-md px-2 py-1 m-1 text-ellipsis overflow-hidden max-w-full h-min cursor-pointer',
     max: 10,
