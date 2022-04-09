@@ -11,7 +11,7 @@ docker exec -it faceitfinder-webapp_webapp_1 npm run tailwind
 [localhost:8080](http://localhost:8080)
 
 ## Prod
-Change `faceitfinder.bot.nu` to your domain in data/app.conf
+Change `faceitfinder.*` to your domain in data/app.conf
 
 ```
 chmod +x init-letsencrypt.sh
