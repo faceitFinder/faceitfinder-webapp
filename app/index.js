@@ -14,6 +14,7 @@ app.use(express.static(path.join(__dirname, 'src/public')))
 // Setup routes
 app.use('/', require(path.join(__dirname, 'src/routes/index.js')))
 app.use('/search', require(path.join(__dirname, 'src/routes/search.js')))
+app.use('/user', require(path.join(__dirname, 'src/routes/user.js')))
 
 app.use((req, res, next) => {
   next(createError(404))

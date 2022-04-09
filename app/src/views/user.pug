@@ -1,0 +1,145 @@
+extends layout 
+
+block stylesheets 
+  link(rel='stylesheet' href='/css/user.css')
+
+block content
+  .flex.flex-wrap.min-h-screen.pt-24.pb-4
+    .w-full.max-w-screen-xl.mx-auto.rounded-md
+      .bg-slate-700.rounded-md.mb-6.p-3.shadow-md
+        //- All panels
+        .flex.flex-row.gap-4.flex-wrap
+          //- First panel
+          .flex.flex-2.flex-row.gap-2.bg-gray-800.rounded-md.p-2(class='lg:flex-row md:flex-col')
+            //- Avatar
+            .flex.flex-col.gap-2.h-min
+              img.w-36.rounded-md.shadow-md(
+                src=user.playerDatas.avatar 
+                alt='avatar-' + user.playerDatas.nickname)
+              .flex.flex-row.justify-center.gap-2.items-center.bg-gray-700.rounded-md.text-white.px-2.py-1.h-min.w-full.font-medium.min-w-max
+                | Detailled Stats
+            .flex.flex-2.flex-row.gap-2.h-min.flex-wrap(class='sm:flex-row md:flex-col')
+              //- Steam link
+              a.flex.gap-2.justify-between.items-center.bg-gray-700.rounded-md.text-white.px-1.py-1.h-min(class='sm:px-2' href='https://steamcommunity.com/profiles/' + user.steamId target='_blank')
+                span.font-medium=user.steamDatas.personaname
+                img.min-h-4.w-4.h-4(src='/img/icons/steam.svg')
+              //- Faceit link
+              a.flex.gap-2.justify-between.items-center.bg-gray-700.rounded-md.text-white.px-2.py-1.h-min(href='https://www.faceit.com/en/players/' + user.playerDatas.nickname target='_blank')
+                span.font-medium=user.playerDatas.nickname
+                img.min-h-4.w-4.h-4(src='/img/icons/faceit.svg')
+              .flex.gap-2.items-center.justify-between.bg-gray-700.rounded-md.text-white.py-1.px-2.h-min
+                //- Elo
+                .flex-1
+                  span.font-medium Elo: 
+                  span=user.playerDatas.games.csgo.faceit_elo
+                //- Level logo
+                img.w-8.h-8(src='/img/faceit/faceit'+ user.playerDatas.games.csgo.skill_level + '.svg'
+                  alt='level' + user.playerDatas.games.csgo.skill_level)
+                //- Last match results
+              .flex.flex-col.bg-gray-700.rounded-md.text-white.py-1.px-2.h-min
+                .capitalize.font-medium last matches: 
+                p.flex.gap-2.justify-start.items-center
+                  each result in user.playerStats.lifetime['Recent Results']
+                    if result == '1'
+                      span.font-medium.text-green-500 W
+                    else
+                      span.font-medium.text-red-500 L
+          //- Second and Third panel
+          .flex.flex-1.gap-4.flex-col(class='lg:flex-row')
+            //- Second panel
+            .flex.flex-1.flex-col.gap-2.bg-gray-800.rounded-md.p-2
+              h1.text-white.px-2.font-medium Main Stats: 
+              //- Country Ladder, Region Ladder
+              .flex.items-center.gap-x-2.w-max
+                //- Country Ladder
+                .flex-1.flex.items-center.justify-center.gap-x-1.bg-gray-700.rounded-md.text-white.px-2
+                  img.w-5.h-5(src='https://purecatamphetamine.github.io/country-flag-icons/3x2/' +  user.playerDatas.country.toUpperCase() + '.svg'
+                    alt='country-' + user.playerDatas.country)
+                  span.w-fit=user.ladder.country.position
+                //- Region Ladder
+                .flex-1.flex.items-center.justify-center.gap-x-1.bg-gray-700.rounded-md.text-white.px-2
+                  img.w-5.h-5(src='https://purecatamphetamine.github.io/country-flag-icons/3x2/' +  user.playerDatas.games.csgo.region.toUpperCase() + '.svg'
+                    alt='country-' + user.playerDatas.games.csgo.region)
+                  span.w-fit=user.ladder.region.position
+              //- Stats
+              .flex.gap-2.flex-wrap
+                .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min
+                  p
+                    span.font-medium Matches: 
+                    span #{user.playerStats.lifetime.Matches}
+                  p
+                    span.font-medium Winrate: 
+                    span #{user.playerStats.lifetime['Win Rate %']}%
+                .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min
+                  p 
+                    span.font-medium K/D: 
+                    span #{user.playerStats.lifetime['Average K/D Ratio']}
+                .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min
+                  p 
+                    span.font-medium HS: 
+                    span #{user.playerStats.lifetime['Average Headshots %']}%
+                .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min
+                  p 
+                    span.font-medium.capitalize Longest win streak: 
+                    span #{user.playerStats.lifetime['Longest Win Streak']}
+            //- Thrid panel
+            .flex.flex-1.flex-col.gap-2.bg-gray-800.rounded-md.p-2
+              h1.rounded-md.text-white.px-2.font-medium.capitalize Last #{user.lastStatsGame.games} Matches Stats: 
+              .flex.gap-2.flex-wrap
+                .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min
+                  p
+                    span.font-medium Winrate: 
+                    span #{user.lastStatsGame.winrate}%
+
+                each value, key  in user.lastStatsGame
+                  if key !== 'games' && key !== 'winrate'
+                    .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min
+                      p
+                        span.font-medium.capitalize #{key}: 
+                        span #{value}
+      .bg-slate-700.rounded-md.mb-6.p-3.shadow-md
+        //- All Maps
+        .flex.flex-col.gap-4
+          h1.text-white.px-2.font-medium Map Stats
+          .flex.flex-col.gap-2.flex-wrap.justify-between
+            each result in user.playerStats.segments
+              .flex.flex-1.flex-col.gap-2.p-2.bg-gray-800.rounded-md(class='md:flex-row')
+                img.rounded-md(src=result.img_regular style='width: 200px; height: 125px;')
+                .flex.flex-col.gap-2
+                  h2.px-2.text-white.font-medium.capitalize #{result.label} - #{result.mode}:
+                  .flex.flex-row.gap-2.flex-wrap
+                    .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min
+                      p.flex.flex-row.gap-1
+                        span.font-medium Matches:
+                        span #{result.stats.Matches}
+                      p.flex.flex-row.gap-1
+                        span.font-medium Winrate:
+                        span #{result.stats['Win Rate %']}%
+                    .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min.w-fit
+                      p
+                        span.font-medium K/D: 
+                        span #{result.stats['Average K/D Ratio']}
+                    .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min.w-fit
+                      p
+                        span.font-medium.capitalize K/R: 
+                        span #{result.stats['Average K/R Ratio']}
+                    .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min.w-fit
+                      p
+                        span.font-medium HS: 
+                        span #{result.stats['Average Headshots %']}%
+                    .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min.w-fit
+                      p
+                        span.font-medium.capitalize Kills: 
+                        span #{result.stats['Average Kills']}
+                    .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min.w-fit
+                      p
+                        span.font-medium.capitalize Deaths: 
+                        span #{result.stats['Average Deaths']}
+                    .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min.w-fit
+                      p
+                        span.font-medium.capitalize Assists: 
+                        span #{result.stats['Average Assists']}
+                    .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min.w-fit
+                      p
+                        span.font-medium.capitalize MVPs: 
+                        span #{result.stats['Average MVPs']}
