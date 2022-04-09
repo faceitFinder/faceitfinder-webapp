@@ -1,0 +1,24 @@
+/* scrollbar */
+.scroll-y {
+  scrollbar-color: #FFFFFF #ffffff00;
+  scrollbar-width: thin;
+}
+
+.scroll-y::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scroll-y::-webkit-scrollbar-thumb {
+  background: #FFFFFF;
+  border-radius: 0.5rem;
+}
+
+.scroll-y::-webkit-scrollbar-thumb:hover {
+  background: #F0F0F0;
+}
+
+.scroll-y::-webkit-scrollbar-track {
+  background: #ffffff00;
+  border-radius: 0.5rem;
+  box-shadow: inset 0px 0px 0px 0px #F0F0F0;
+}
