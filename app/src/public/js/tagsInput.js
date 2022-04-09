@@ -3,6 +3,7 @@
   const TagsInput = function (opts) {
     this.options = Object.assign(TagsInput.defaults, opts)
     this.init()
+    this.setWrapperMaxWidth(this.wrapper.offsetWidth)
   }
 
   // Initialize the plugin
@@ -103,6 +104,10 @@
     this.initialized = false
   }
 
+  TagsInput.prototype.setWrapperMaxWidth = function (maxWidth) {
+    this.wrapper.style.maxWidth = maxWidth + 'px'
+  }
+
   // Private function to initialize the tag input plugin
   function init(tags) {
     tags.wrapper.append(tags.input)
@@ -136,9 +141,9 @@
   // Set All the Default Values
   TagsInput.defaults = {
     selector: '',
-    wrapperClass: 'bg-gray-700 overflow-y-scroll scroll-y text-gray-300 rounded-md h-full p-2 flex justify-top flex-wrap overflow-hidden max-w-2xl h-72 content-start',
+    wrapperClass: 'bg-gray-700 overflow-y-scroll scroll-y text-gray-300 rounded-md h-full p-2 flex justify-top flex-wrap overflow-hidden w-full h-72 content-start',
     inputClass: 'bg-inherit focus:outline-none w-full h-min m-1',
-    tagClass: 'hover:bg-red-400 hover:font-medium bg-slate-600 text-white rounded-md px-2 py-1 m-1 text-ellipsis overflow-hidden max-w-full h-min cursor-pointer',
+    tagClass: 'hover:bg-red-400 hover:font-medium bg-slate-600 text-white rounded-md px-2 py-1 m-1 text-ellipsis overflow-hidden h-min cursor-pointer',
     max: 10,
     duplicate: false
   }
@@ -147,3 +152,10 @@
 })()
 
 const search = new TagsInput({ selector: 'search' })
+
+window.onresize = function () {
+  let maxWidth = document.querySelector('html').offsetWidth - 35
+  search.setWrapperMaxWidth(maxWidth)
+  const widthH1 = document.querySelector('h1').offsetWidth 
+  if (widthH1 > maxWidth) search.setWrapperMaxWidth(widthH1)
+}

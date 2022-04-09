@@ -1,7 +1,7 @@
 extends layout
 
 block stylesheets
-  link(rel='stylesheet', href='/css/custom.css')
+  link(rel='stylesheet' href='/css/custom.css')
 
 block content
   .flex.flex-col.justify-center.items-center.min-h-screen.pt-24.pb-4
@@ -9,8 +9,9 @@ block content
       if error
         .bg-red-400.rounded-md.mb-3.p-3.font-medium
           span.text-red-800.text-ellipsis.overflow-hidden Error: #{error}.
-      h1.text-2xl.font-extrabold.text-slate-200.tracking-tight.font-popins(class='sm:text-3xl') 
-        | Want to find multiple faceit accounts ?
+      div
+        h1.text-2xl.font-extrabold.text-slate-200.tracking-tight.font-popins.w-fit(class='sm:text-3xl') 
+          | Want to find multiple faceit accounts ?
       h2.font-medium.text-slate-300.underline 
         | Maximum of 10 accounts.
       h3.font-normal.text-slate-300
@@ -21,3 +22,5 @@ block content
           class='hover:bg-gray-100' 
           type='submit') 
           | Search
+block scripts
+  script(src="/js/tagsInput.js")

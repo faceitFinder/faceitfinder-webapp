@@ -15,25 +15,30 @@ block content
               //- First panel
               .flex.flex-2.flex-row.gap-2.bg-gray-800.rounded-md.p-2(class='lg:flex-row md:flex-col')
                 //- Avatar
-                img.w-36.h-36.rounded-md.shadow-md(
-                  src=user.playerDatas.avatar 
-                  alt='avatar-' + user.playerDatas.nickname)
-                .flex.flex-row.gap-2.h-min.flex-wrap(class='sm:flex-row md:flex-col')
+                .flex.flex-1.flex-col.gap-2.h-min
+                  img.w-36.rounded-md.shadow-md(
+                    src=user.playerDatas.avatar 
+                    alt='avatar-' + user.playerDatas.nickname)
+                  a.flex.flex-row.justify-between.gap-2.items-center.bg-gray-700.rounded-md.text-white.px-2.py-1.h-min.w-max.font-medium(
+                    href='/user/' + user.steamId target='_blank')
+                    span Detailled Stats
+                    img.min-h-4.w-4.h-4(src='/img/icons/external-link.svg')
+                .flex.flex-2.flex-row.gap-2.h-min.flex-wrap(class='sm:flex-row md:flex-col')
                   //- Steam link
                   a.flex.gap-2.justify-between.items-center.bg-gray-700.rounded-md.text-white.px-1.py-1.h-min(class='sm:px-2' href='https://steamcommunity.com/profiles/' + user.steamId target='_blank')
                     span.font-medium=user.steamDatas.personaname
-                    img.min-h-4.w-4.h-4(src='img/steam.svg')
+                    img.min-h-4.w-4.h-4(src='/img/icons/steam.svg')
                   //- Faceit link
                   a.flex.gap-2.justify-between.items-center.bg-gray-700.rounded-md.text-white.px-2.py-1.h-min(href='https://www.faceit.com/en/players/' + user.playerDatas.nickname target='_blank')
                     span.font-medium=user.playerDatas.nickname
-                    img.min-h-4.w-4.h-4(src='img/faceit.svg')
-                  .flex.items-center.justify-between.bg-gray-700.rounded-md.text-white.py-1.px-2.h-min
+                    img.min-h-4.w-4.h-4(src='/img/icons/faceit.svg')
+                  .flex.gap-2.items-center.justify-between.bg-gray-700.rounded-md.text-white.py-1.px-2.h-min
                     //- Elo
                     .flex-1
                       span.font-medium Elo: 
                       span=user.playerDatas.games.csgo.faceit_elo
                     //- Level logo
-                    img.ml-2.w-8.h-8(src='img/faceit/faceit'+ user.playerDatas.games.csgo.skill_level + '.svg'
+                    img.w-8.h-8(src='/img/faceit/faceit'+ user.playerDatas.games.csgo.skill_level + '.svg'
                       alt='level' + user.playerDatas.games.csgo.skill_level)
                     //- Last match results
                   .flex.flex-col.bg-gray-700.rounded-md.text-white.py-1.px-2.h-min
@@ -97,3 +102,4 @@ block content
                           p
                             span.font-medium.capitalize #{key}: 
                             span #{value}
+

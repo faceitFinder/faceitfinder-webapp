@@ -1,11 +1,7 @@
 const { Router } = require('express')
 const router = Router()
 const { findSteamUIds } = require('../utilities/regexp/regexp')
-const Steam = require('../utilities/steam/steam')
-const Player = require('../utilities/faceit/player')
-const Ladder = require('../utilities/faceit/ladder')
 const Stats = require('../utilities/stats/player')
-const Match = require('../utilities/faceit/match')
 
 router.post('/', async (req, res, next) => {
   const max = 10
@@ -22,49 +18,12 @@ router.post('/', async (req, res, next) => {
       .split(/,+/)
       .forEach(e => users.push(e.split('/').filter(e => e).pop()))
 
-  Promise.all(getUsersDatas(users.slice(0, max)))
+  Promise.all(Stats.getUsersDatas(users.slice(0, max)))
     .then(userDatas => res.render(
       'search', {
       'title': 'FaceitFinder - SEARCH',
       'datas': userDatas
     }))
 })
-
-const getUsersDatas = users => {
-  return users.map(async e => {
-    try {
-      const maxMatch = 10
-      const steamId = await Steam.getId(e)
-      const steamDatas = await Steam.getDatas(steamId)
-      const faceitId = await Player.getId(steamId)
-      const playerDatas = await Player.getDatas(faceitId)
-      const playerHistory = await Match.getMatchElo(faceitId, maxMatch)
-      const playerStats = await Player.getStats(faceitId)
-      const ladderRegion = await Ladder.getDatas(faceitId, playerDatas.games.csgo.region)
-      const ladderCountry = await Ladder.getDatas(faceitId, playerDatas.games.csgo.region, playerDatas.country)
-
-      const datas = {
-        steamParam: e,
-        steamId: steamId,
-        steamDatas: steamDatas,
-        playerDatas: playerDatas,
-        playerStats: playerStats,
-        lastStatsGame: Stats.generatePlayerStats(playerHistory),
-        ladder: {
-          region: ladderRegion,
-          country: ladderCountry,
-        }
-      }
-      return datas
-    } catch (error) {
-      console.log(error)
-      return {
-        steamParam: e,
-        error: 'An error has occured'
-      }
-    }
-  })
-}
-
 
 module.exports = router

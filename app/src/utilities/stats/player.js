@@ -1,3 +1,8 @@
+const Steam = require('../steam/steam')
+const Player = require('../faceit/player')
+const Ladder = require('../faceit/ladder')
+const Match = require('../faceit/match')
+
 const generatePlayerStats = playerHistory => {
   const playerStats = {
     wins: 0,
@@ -33,8 +38,45 @@ const generatePlayerStats = playerHistory => {
   }
 }
 
+const getUsersDatas = users => {
+  return users.map(async e => {
+    try {
+      const maxMatch = 10
+      const steamId = await Steam.getId(e)
+      const steamDatas = await Steam.getDatas(steamId)
+      const faceitId = await Player.getId(steamId)
+      const playerDatas = await Player.getDatas(faceitId)
+      const playerHistory = await Match.getMatchElo(faceitId, maxMatch)
+      const playerStats = await Player.getStats(faceitId)
+      const ladderRegion = await Ladder.getDatas(faceitId, playerDatas.games.csgo.region)
+      const ladderCountry = await Ladder.getDatas(faceitId, playerDatas.games.csgo.region, playerDatas.country)
+
+      const datas = {
+        steamParam: e,
+        steamId: steamId,
+        steamDatas: steamDatas,
+        playerDatas: playerDatas,
+        playerStats: playerStats,
+        lastStatsGame: generatePlayerStats(playerHistory),
+        ladder: {
+          region: ladderRegion,
+          country: ladderCountry,
+        }
+      }
+      return datas
+    } catch (error) {
+      console.log(error)
+      return {
+        steamParam: e,
+        error: 'An error has occured'
+      }
+    }
+  })
+}
+
 const getAverage = (q, d, fixe = 2, percent = 1) => { return ((q / d) * percent).toFixed(fixe) }
 
 module.exports = {
+  getUsersDatas,
   generatePlayerStats
 }
