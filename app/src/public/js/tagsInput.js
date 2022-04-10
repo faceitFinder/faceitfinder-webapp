@@ -3,7 +3,6 @@
   const TagsInput = function (opts) {
     this.options = Object.assign(TagsInput.defaults, opts)
     this.init()
-    this.setWrapperMaxWidth(this.wrapper.offsetWidth)
   }
 
   // Initialize the plugin
@@ -42,11 +41,7 @@
     // Delete the tag when icon is clicked
     tag.addEventListener('click', function (e) {
       e.preventDefault()
-      const tag = this
-
-      for (let i = 0; i < tagInput.wrapper.childNodes.length; i++)
-        if (tagInput.wrapper.childNodes[i] == tag)
-          tagInput.deleteTag(tag, i)
+      tagInput.deleteTag(this)
     })
 
     this.wrapper.insertBefore(tag, this.input)
@@ -59,9 +54,9 @@
   }
 
   // Delete Tags
-  TagsInput.prototype.deleteTag = function (tag, i) {
+  TagsInput.prototype.deleteTag = function (tag) {
     tag.remove()
-    this.arr.splice(i, 1)
+    this.arr = this.arr.filter(item => item !== tag.innerText)
     this.orignal_input.value = this.arr.join(',')
 
     return this
@@ -104,10 +99,6 @@
     this.initialized = false
   }
 
-  TagsInput.prototype.setWrapperMaxWidth = function (maxWidth) {
-    this.wrapper.style.maxWidth = maxWidth + 'px'
-  }
-
   // Private function to initialize the tag input plugin
   function init(tags) {
     tags.wrapper.append(tags.input)
@@ -126,7 +117,7 @@
     tags.input.addEventListener('keydown', function (e) {
       // Check if backspace
       if (e.keyCode == 8 && tags.input.value.length == 0)
-        tags.deleteTag(tags.wrapper.querySelector('span:first-of-type'), tags.arr.length - 1)
+        tags.deleteTag(tags.wrapper.querySelector('span:first-of-type'))
       const str = tags.input.value.trim()
 
       if (!!(~[9, 13, 188].indexOf(e.keyCode))) {
@@ -141,9 +132,9 @@
   // Set All the Default Values
   TagsInput.defaults = {
     selector: '',
-    wrapperClass: 'bg-gray-700 overflow-y-scroll scroll-y text-gray-300 rounded-md h-full p-2 flex justify-top flex-wrap overflow-hidden w-full h-72 content-start',
+    wrapperClass: 'bg-gray-700 overflow-y-scroll scroll-y text-gray-300 rounded-md h-full p-2 flex justify-top flex-wrap overflow-hidden max-w-2xl h-72 content-start',
     inputClass: 'bg-inherit focus:outline-none w-full h-min m-1',
-    tagClass: 'hover:bg-red-400 hover:font-medium bg-slate-600 text-white rounded-md px-2 py-1 m-1 text-ellipsis overflow-hidden h-min cursor-pointer',
+    tagClass: 'hover:bg-red-400 hover:font-medium bg-slate-600 text-white rounded-md px-2 py-1 m-1 text-ellipsis overflow-hidden max-w-full h-min cursor-pointer',
     max: 10,
     duplicate: false
   }
@@ -152,10 +143,6 @@
 })()
 
 const search = new TagsInput({ selector: 'search' })
-
-window.onresize = function () {
-  let maxWidth = document.querySelector('html').offsetWidth - 35
-  search.setWrapperMaxWidth(maxWidth)
-  const widthH1 = document.querySelector('h1').offsetWidth 
-  if (widthH1 > maxWidth) search.setWrapperMaxWidth(widthH1)
+window.onload = () => {
+  search.addData(document.getElementById('search').value.split(',').filter(item => item != ''))
 }
