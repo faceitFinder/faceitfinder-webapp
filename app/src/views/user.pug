@@ -3,6 +3,26 @@ extends layout
 block stylesheets 
   link(rel='stylesheet' href='/css/user.css')
 
+block scripts
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js' integrity='sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(src='/js/chart.js')
+  script.
+    window.onload = async () => {
+      // get daily, weekly and monthly dates
+      const faceitId = '#{user.playerStats.player_id}'
+      const maxMatchs = '#{user.playerStats.lifetime.Matches}'
+      const daily = await getDayDates(faceitId, maxMatchs)
+      const weekly = await getWeekDates(faceitId, maxMatchs)
+      const monthly = await getMonthDates(faceitId, maxMatchs)
+      generateChart(daily, 0, 'dailyStats')
+      generateChart(weekly, 0, 'weeklyStats')
+      generateChart(monthly, 0, 'monthlyStats')
+
+      generateSelectOptions(daily, 'dailySelect')
+      generateSelectOptions(weekly, 'weeklySelect')
+      generateSelectOptions(monthly, 'monthlySelect')
+    }
+
 block content
   .flex.flex-wrap.min-h-screen.pt-24.pb-4
     .w-full.max-w-screen-xl.mx-auto.rounded-md
@@ -143,3 +163,23 @@ block content
                       p
                         span.font-medium.capitalize MVPs: 
                         span #{result.stats['Average MVPs']}
+      .bg-slate-700.rounded-md.mb-6.p-3.shadow-md
+        .flex.flex-col.gap-4
+          .flex.flex-1.flex-col.gap-2.p-2.bg-gray-800.rounded-md
+            .flex.gap-2
+              h1.text-white.text-xl.p-2.font-medium Daily Stats
+              select#dailySelect.rounded-md.bg-gray-700.shadow.text-white.px-2(class="focus:outline-none" name="dailyStats")
+                option.rounded-md.px-2(selected) Select a day
+            canvas#dailyStats.w-full.h-full 
+          .flex.flex-1.flex-col.gap-2.p-2.bg-gray-800.rounded-md
+            .flex.gap-2
+              h1.text-white.text-xl.p-2.font-medium Weekly Stats
+              select#weeklySelect.rounded-md.bg-gray-700.shadow.text-white.px-2(class="focus:outline-none" name="dailyStats")
+                option.rounded-md.px-2(selected) Select a week
+            canvas#weeklyStats.w-full.h-full
+          .flex.flex-1.flex-col.gap-2.p-2.bg-gray-800.rounded-md
+            .flex.gap-2
+              h1.text-white.text-xl.p-2.font-medium Monthly Stats
+              select#monthlySelect.rounded-md.bg-gray-700.shadow.text-white.px-2(class="focus:outline-none" name="dailyStats")
+                option.rounded-md.px-2(selected) Select a month
+            canvas#monthlyStats.w-full.h-full
