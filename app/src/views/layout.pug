@@ -4,19 +4,19 @@ html
     meta(charset='UTF-8')
     meta(http-equiv='X-UA-Compatible' content='IE=edge')
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    meta(name='description', content='Get Faceit accounts stats from Steam parameters such as: Vanity URLs, Custom URLs, SteamID64 URLs, Steam64 IDs, Steam2 IDs')
+    meta(name='description' content='Get Faceit accounts stats from Steam parameters such as: Vanity URLs, Custom URLs, SteamID64 URLs, Steam64 IDs, Steam2 IDs')
     meta(itemprop='name', content=title)
-    meta(itemprop='description', content='Get Faceit accounts stats from Steam parameters such as: Vanity URLs, Custom URLs, SteamID64 URLs, Steam64 IDs, Steam2 IDs')
-    meta(itemprop='image', content='https://faceitfinder.app/img/preview.jpg')
-    meta(property='og:url', content='https://faceitfinder.app')
-    meta(property='og:type', content='website')
+    meta(itemprop='description' content='Get Faceit accounts stats from Steam parameters such as: Vanity URLs, Custom URLs, SteamID64 URLs, Steam64 IDs, Steam2 IDs')
+    meta(itemprop='image' content='https://faceitfinder.app/img/preview.jpg')
+    meta(property='og:url' content='https://faceitfinder.app')
+    meta(property='og:type' content='website')
     meta(property='og:title', content=title)
-    meta(property='og:description', content='Get Faceit accounts stats from Steam parameters such as: Vanity URLs, Custom URLs, SteamID64 URLs, Steam64 IDs, Steam2 IDs')
-    meta(property='og:image', content='https://faceitfinder.app/img/preview.jpg')
-    meta(name='twitter:card', content='summary_large_image')
+    meta(property='og:description' content='Get Faceit accounts stats from Steam parameters such as: Vanity URLs, Custom URLs, SteamID64 URLs, Steam64 IDs, Steam2 IDs')
+    meta(property='og:image' content='https://faceitfinder.app/img/preview.jpg')
+    meta(name='twitter:card' content='summary_large_image')
     meta(name='twitter:title', content=title)
-    meta(name='twitter:description', content='Get Faceit accounts stats from Steam parameters such as: Vanity URLs, Custom URLs, SteamID64 URLs, Steam64 IDs, Steam2 IDs')
-    meta(name='twitter:image', content='https://faceitfinder.app/img/preview.jpg')
+    meta(name='twitter:description' content='Get Faceit accounts stats from Steam parameters such as: Vanity URLs, Custom URLs, SteamID64 URLs, Steam64 IDs, Steam2 IDs')
+    meta(name='twitter:image' content='https://faceitfinder.app/img/preview.jpg')
     title= title
     link(rel='icon' type='image/png' href='/img/logo.png')
     link(rel='stylesheet' href='/css/styles.css')
@@ -43,18 +43,16 @@ html
             .hidden(class='sm:block sm:ml-6')
               .flex.space-x-4
                 //- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white"
-                a.bg-gray-900.text-white.px-3.py-2.rounded-md.text-sm.font-medium(href='/' aria-current='page') Home
-                a.text-gray-300.px-3.py-2.rounded-md.text-sm.font-medium(class='hover:bg-blue-600 hover:text-white' href='https://discord.gg/uPAdfvfuTP' aria-current='page' target='_blank') Discord Server
-                a.text-gray-300.px-3.py-2.rounded-md.text-sm.font-medium(class='hover:bg-indigo-600 hover:text-white' href='https://discord.com/oauth2/authorize?client_id=838088031222235197&permissions=274878220288&scope=bot%20applications.commands' aria-current='page' target='_blank') Discord Bot
+                a.bg-gray-900.text-white.px-3.py-2.rounded-md.text-sm.font-medium(href='/') Home
+                a.text-gray-300.px-3.py-2.rounded-md.text-sm.font-medium(class='hover:bg-blue-600 hover:text-white' href='https://discord.gg/uPAdfvfuTP' target='_blank') Discord Server
+                a.text-gray-300.px-3.py-2.rounded-md.text-sm.font-medium(class='hover:bg-indigo-600 hover:text-white' href='https://discord.com/oauth2/authorize?client_id=838088031222235197&permissions=274878220288&scope=bot%20applications.commands' target='_blank') Discord Bot
 
       #mobile-menu(class='sm:hidden hidden')
-        .px-2.pt-2.pb-3.space-y-1
+        .px-2.pt-2.pb-3.flex.flex-col.gap-2
           //- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white"
-          a.bg-gray-900.text-white.block.px-3.py-2.rounded-md.text-base.font-medium(href='/' aria-current='page') Home
-          a.text-gray-300.block.px-3.py-2.rounded-md.text-base.font-medium(href='https://discord.gg/uPAdfvfuTP'
-            target='_blank'
-              class='hover:bg-blue-600 hover:text-white') Discord
-          a.text-gray-300.px-3.py-2.rounded-md.text-sm.font-medium(class='hover:bg-indigo-600 hover:text-white' href='https://discord.com/oauth2/authorize?client_id=838088031222235197&permissions=274878220288&scope=bot%20applications.commands' aria-current='page' target='_blank') Discord Bot
+          a.bg-gray-900.text-white.block.px-3.py-2.rounded-md.text-base.font-medium(href='/') Home
+          a.text-gray-300.block.px-3.py-2.rounded-md.text-base.font-medium(href='https://discord.gg/uPAdfvfuTP' target='_blank' class='hover:bg-blue-600 hover:text-white') Discord
+          a.text-gray-300.block.px-3.py-2.rounded-md.text-base.font-medium(class='hover:bg-indigo-600 hover:text-white' href='https://discord.com/oauth2/authorize?client_id=838088031222235197&permissions=274878220288&scope=bot%20applications.commands' target='_blank') Discord Bot
 
     main.px-2.min-h-screen.container.mx-auto.z-40(class='sm:px-6 lg:px-8')
       block content
