@@ -13,38 +13,39 @@ const limiter = rateLimit({
 
 require('dotenv').config()
 
-router.get('/history/:id/:max/((month|day|week)){1}$', limiter, async (req, res, next) => {
-  const maxMatchs = parseInt(req.params.max) || 250
+router.get('/history/:id/:max/((month|day|week|overall)){1}$', limiter, async (req, res, next) => {
+  const maxMatches = parseInt(req.params.max) || 250
   const faceitId = req.params.id
   const getDay = req.params[0] === 'day' ? Dates.getDayDate :
     req.params[0] === 'week' ? Dates.getWeekDate :
-      Dates.getMonthDate
+      req.params[0] === 'month' ? Dates.getMonthDate :
+        Dates.getOverallDate
 
-  const dates = await Dates.getDates(faceitId, maxMatchs, getDay)
+  const dates = await Dates.getDates(faceitId, maxMatches, getDay)
 
   res.json({
     faceitId: faceitId,
-    maxMatchs: maxMatchs,
+    maxMatches: maxMatches,
     sortBy: req.params[0],
     dates: [...dates.values()]
   })
 })
 
 router.get('/history/:id/:max/:from-:to', limiter, async (req, res, next) => {
-  const maxMatchs = parseInt(req.params.max) || 250
+  const maxMatches = parseInt(req.params.max) || 250
   const from = parseInt(req.params.from) || 0
   const to = parseInt(req.params.to) || new Date().getTime()
 
-  const matchsHistory = await Match.getMatchElo(req.params.id, maxMatchs)
-  const matchsHistoryFiltered = matchsHistory.filter(e => e.date >= from && e.date < to)
-  const history = Stats.generatePlayerStats(matchsHistoryFiltered)
+  const MatchesHistory = await Match.getMatchElo(req.params.id, maxMatches)
+  const MatchesHistoryFiltered = MatchesHistory.filter(e => e.date >= from && e.date < to)
+  const history = Stats.generatePlayerStats(MatchesHistoryFiltered)
 
   res.json({
     faceitId: req.params.id,
     from: new Date(from).toISOString(),
     to: new Date(to).toISOString(),
     averageStats: history,
-    matchs: matchsHistoryFiltered
+    Matches: MatchesHistoryFiltered
   })
 })
 

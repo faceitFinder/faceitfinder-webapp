@@ -5,9 +5,9 @@ const getDates = async (playerId, maxMatch, getDay) => {
   await Match.getMatchElo(playerId, maxMatch)
     .then(m => m.forEach(e => {
       const { startDate, endDate } = getDay(e.date)
-      if (!dates.has(startDate)) dates.set(startDate, { totalMatchs: 1, startDate: startDate, endDate: endDate })
+      if (!dates.has(startDate)) dates.set(startDate, { totalMatches: 1, startDate: startDate, endDate: endDate })
       else dates.set(startDate, {
-        totalMatchs: dates.get(startDate).totalMatchs + 1,
+        totalMatches: dates.get(startDate).totalMatches + 1,
         startDate: startDate,
         endDate: endDate
       })
@@ -60,9 +60,17 @@ const getMonthDate = date => {
   }
 }
 
+const getOverallDate = date => {
+  return {
+    startDate: 0,
+    endDate: new Date().getTime()
+  }
+}
+
 module.exports = {
   getDates,
   getDayDate,
   getWeekDate,
-  getMonthDate
+  getMonthDate,
+  getOverallDate
 }
