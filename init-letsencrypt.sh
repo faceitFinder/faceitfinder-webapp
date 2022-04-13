@@ -37,6 +37,15 @@ docker-compose -f docker-compose.prod.yml run --rm --entrypoint "\
     -subj '/CN=localhost'" certbot
 echo
 
+echo "### Creating dummy certificate for default"
+path="/etc/letsencrypt/dummy/"
+mkdir -p "$data_path/conf/dummy/"
+docker-compose -f docker-compose.prod.yml run --rm --entrypoint "\
+  openssl req -x509 -nodes -newkey rsa:$rsa_key_size -days 1\
+    -keyout '$path/privkey.pem' \
+    -out '$path/fullchain.pem' \
+    -subj '/CN=localhost'" certbot
+echo
 
 echo "### Starting nginx ..."
 docker-compose -f docker-compose.prod.yml up --force-recreate -d nginx
