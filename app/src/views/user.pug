@@ -3,6 +3,31 @@ extends layout
 block stylesheets 
   link(rel='stylesheet' href='/css/user.css')
 
+block scripts
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js' integrity='sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(src='/js/chart.js')
+  script.
+    window.onload = async () => {
+      // get daily, weekly and monthly dates
+      const faceitId = '#{user.playerStats.player_id}'
+      const maxMatches = '#{user.playerStats.lifetime.Matches}'
+
+      const daily = await getDayDates(faceitId, maxMatches)
+      const weekly = await getWeekDates(faceitId, maxMatches)
+      const monthly = await getMonthDates(faceitId, maxMatches)
+      const overall = await getOverallDates(faceitId, maxMatches)
+      const currentIndex = 0
+
+      generateChart(daily, currentIndex, 'dailyStats', 'dailyBadges')
+      generateChart(weekly, currentIndex, 'weeklyStats', 'weeklyBadges')
+      generateChart(monthly, currentIndex, 'monthlyStats', 'monthlyBadges')
+      generateChart(overall, currentIndex, 'overallStats', 'overallBadges')
+
+      generateSelectOptions(daily, 'dailySelect', 'dailyStats', 'dailyBadges')
+      generateSelectOptions(weekly, 'weeklySelect', 'weeklyStats', 'weeklyBadges')
+      generateSelectOptions(monthly, 'monthlySelect', 'monthlyStats', 'monthlyBadges')
+    }
+
 block content
   .flex.flex-wrap.min-h-screen.pt-24.pb-4
     .w-full.max-w-screen-xl.mx-auto.rounded-md
@@ -84,15 +109,15 @@ block content
                     span #{user.playerStats.lifetime['Longest Win Streak']}
             //- Thrid panel
             .flex.flex-1.flex-col.gap-2.bg-gray-800.rounded-md.p-2
-              h1.rounded-md.text-white.px-2.font-medium.capitalize Last #{user.lastStatsGame.games} Matches Stats: 
+              h1.rounded-md.text-white.px-2.font-medium.capitalize Last #{user.lastStatsGame.Matches} Matches Stats: 
               .flex.gap-2.flex-wrap
                 .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min
                   p
                     span.font-medium Winrate: 
-                    span #{user.lastStatsGame.winrate}%
+                    span #{user.lastStatsGame.Winrate}
 
                 each value, key  in user.lastStatsGame
-                  if key !== 'games' && key !== 'winrate'
+                  if key !== 'Matches' && key !== 'Winrate'
                     .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min
                       p
                         span.font-medium.capitalize #{key}: 
@@ -143,3 +168,44 @@ block content
                       p
                         span.font-medium.capitalize MVPs: 
                         span #{result.stats['Average MVPs']}
+      .bg-slate-700.rounded-md.mb-6.p-3.shadow-md
+        .flex.flex-col.gap-4
+          .flex.flex-col.gap-4
+            .flex.items-center.gap-2.flex-wrap
+              h1.capitalize.text-white.px-2.font-medium Overall Stats
+            .flex.flex-1.flex-col.gap-4.p-2.bg-gray-800.rounded-md
+              .flex.flex-col.gap-2
+                h2.capitalize.font-medium.text-white average stats:
+                #overallBadges.flex.gap-2.flex-wrap    
+              .flex-1
+                canvas#overallStats.w-full.h-full
+          .flex.flex-col.gap-4
+            .flex.items-center.gap-2.flex-wrap
+              h1.capitalize.text-white.px-2.font-medium Daily Stats
+              select#dailySelect.rounded-md.bg-gray-800.shadow.text-white.p-2(class="focus:outline-none" name="dailyStats")
+            .flex.flex-1.flex-col.gap-4.p-2.bg-gray-800.rounded-md
+              .flex.flex-col.gap-2
+                h2.capitalize.font-medium.text-white average stats:
+                #dailyBadges.flex.gap-2.flex-wrap    
+              .flex-1
+                canvas#dailyStats.w-full.h-full
+          .flex.flex-col.gap-4
+            .flex.items-center.gap-2.flex-wrap
+              h1.capitalize.text-white.px-2.font-medium Weekly Stats
+              select#weeklySelect.rounded-md.bg-gray-800.shadow.text-white.p-2(class="focus:outline-none" name="weeklyStats")
+            .flex.flex-1.flex-col.gap-4.p-2.bg-gray-800.rounded-md
+              .flex.flex-col.gap-2
+                h2.capitalize.font-medium.text-white average stats:
+                #weeklyBadges.flex.gap-2.flex-wrap    
+              .flex-1
+                canvas#weeklyStats.w-full.h-full
+          .flex.flex-col.gap-4
+            .flex.items-center.gap-2.flex-wrap
+              h1.capitalize.text-white.px-2.font-medium Monthly Stats
+              select#monthlySelect.rounded-md.bg-gray-800.shadow.text-white.p-2(class="focus:outline-none" name="monthlyStats")
+            .flex.flex-1.flex-col.gap-4.p-2.bg-gray-800.rounded-md
+              .flex.flex-col.gap-2
+                h2.capitalize.font-medium.text-white average stats:
+                #monthlyBadges.flex.gap-2.flex-wrap    
+              .flex-1
+                canvas#monthlyStats.w-full.h-full

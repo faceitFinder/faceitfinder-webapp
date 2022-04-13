@@ -89,15 +89,15 @@ block content
                         span #{user.playerStats.lifetime['Longest Win Streak']}
                 //- Thrid panel
                 .flex.flex-1.flex-col.gap-2.bg-gray-800.rounded-md.p-2
-                  h2.rounded-md.text-white.px-2.font-medium.capitalize Last #{user.lastStatsGame.games} Matches Stats: 
+                  h2.rounded-md.text-white.px-2.font-medium.capitalize Last #{user.lastStatsGame.Matches} Matches Stats: 
                   .flex.gap-2.flex-wrap
                     .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min
                       p
                         span.font-medium Winrate: 
-                        span #{user.lastStatsGame.winrate}%
+                        span #{user.lastStatsGame.Winrate}
 
                     each value, key  in user.lastStatsGame
-                      if key !== 'games' && key !== 'winrate'
+                      if key !== 'Matches' && key !== 'Winrate'
                         .flex.bg-gray-700.rounded-md.text-white.px-2.gap-x-2.h-min
                           p
                             span.font-medium.capitalize #{key}: 

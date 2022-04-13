@@ -27,8 +27,8 @@ const generatePlayerStats = playerHistory => {
   }
 
   return {
-    winrate: getAverage(playerStats.wins, playerStats.games, 2, 100),
-    games: playerStats.games,
+    Winrate: getAverage(playerStats.wins, playerStats.games, 2, 100) + '%',
+    Matches: playerStats.games,
     'K/D': getAverage(playerStats['K/D'], playerStats.games),
     'HS': getAverage(playerStats['HS'], playerStats.games) + '%',
     'MVPs': getAverage(playerStats['MVPs'], playerStats.games),
