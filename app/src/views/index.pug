@@ -1,5 +1,22 @@
 extends layout
 
+block meta
+  - desc = 'Find up to 10 Faceit accounts and get the related stats from Steam parameters such as: Vanity URLs, Custom URLs, SteamID64 URLs, Steam64 IDs, Steam2 IDs and the ingame status'
+  - preview = 'https://www.faceitfinder.app/img/preview.jpg'
+  meta(name='description' content=desc)
+  meta(itemprop='name', content=title)
+  meta(itemprop='description' content=desc)
+  meta(itemprop='image' content=preview)
+  meta(property='og:url' content='https://www.faceitfinder.app')
+  meta(property='og:type' content='website')
+  meta(property='og:title', content=title)
+  meta(property='og:description' content=desc)
+  meta(property='og:image' content=preview)
+  meta(name='twitter:card' content='summary_large_image')
+  meta(name='twitter:title', content=title)
+  meta(name='twitter:description' content=desc)
+  meta(name='twitter:image' content=preview)
+
 block stylesheets
   link(rel='stylesheet' href='/css/custom.css')
 
@@ -16,7 +33,7 @@ block content
         | Maximum of 10 accounts.
       h3.font-normal.text-slate-300
         | You need to separate the accounts with a comma.
-      form.w-full(method='POST' action='/search')
+      form.w-full(method='POST' action='/search' onsubmit='searchFormSubmit(event)')
         input#search(name='search')
         button.w-full.flex.justify-center.items-center.rounded-md.bg-gray-300.text-gray-700.mt-2.p-2.font-bold.transition-all.ease-in-out(
           class='hover:bg-gray-100' 

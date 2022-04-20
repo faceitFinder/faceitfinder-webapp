@@ -68,7 +68,7 @@
       console.log('max tags limit reached')
       return true
     }
-
+    if (string.length <= 0) return true
     return !this.options.duplicate && this.arr.includes(string)
   }
 
@@ -143,6 +143,14 @@
 })()
 
 const search = new TagsInput({ selector: 'search' })
+
 window.onload = () => {
   search.addData(document.getElementById('search').value.split(',').filter(item => item != ''))
+}
+
+const searchFormSubmit = (e) => {
+  e.preventDefault()
+  search.addTag(search.input.value.trim())
+  search.input.value = ''
+  e.target.submit()
 }
